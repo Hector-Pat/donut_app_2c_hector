@@ -1,94 +1,107 @@
 import 'package:donut_app_2c_hector/utils/donut_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:donut_app_2c_hector/cart/cart.dart';
+import 'package:donut_app_2c_hector/cart/cart_item.dart';
 
 class BurgerTab extends StatelessWidget {
-  //Lista de donas
-  final List donutsOnSale = [
-    // [ donutFlavor, donutPrice, donutColor, imageName ]
-    [
-      "Ice Cream",
-      "Krispy Kreme",
-      "36",
-      Colors.blue,
-      "lib/images/icecream_donut.png"
-    ],
-    [
-      "Strawberry",
-      "Dunkin Donuts",
-      "45",
-      Colors.red,
-      "lib/images/strawberry_donut.png"
-    ],
-    [
-      "Grape Ape",
-      "El Globo",
-      "84",
-      Colors.purple,
-      "lib/images/grape_donut.png"
-    ],
-    [
-      "Choco",
-      "Starbucks",
-      "95",
-      Colors.brown,
-      "lib/images/chocolate_donut.png"
-    ],
-    //otras 4 donas mas
-    [
-      "Ice Cream",
-      "Krispy Kreme",
-      "36",
-      Colors.blue,
-      "lib/images/icecream_donut.png"
-    ],
-    [
-      "Strawberry",
-      "Dunkin Donuts",
-      "45",
-      Colors.red,
-      "lib/images/strawberry_donut.png"
-    ],
-    [
-      "Grape Ape",
-      "El Globo",
-      "84",
-      Colors.purple,
-      "lib/images/grape_donut.png"
-    ],
-    [
-      "Choco",
-      "Starbucks",
-      "95",
-      Colors.brown,
-      "lib/images/chocolate_donut.png"
-    ],
+  final Cart cart; // Agregar la instancia de Cart
 
-    
+  // Lista de hamburguesas
+  final List burgersOnSale = [
+    [
+      "Basic burger",
+      "macdonals",
+      "100",
+      Colors.blue,
+      "lib/images/basic_burger.png"
+    ],
+    [
+      "Cheese burger",
+      "monica burgers",
+      "145",
+      Colors.red,
+      "lib/images/cheese_burger.png"
+    ],
+    [
+      "Double burger",
+      "burger king",
+      "180",
+      Colors.purple,
+      "lib/images/double_burger.png"
+    ],
+    [
+      "Steak burger",
+      "Starbucks",
+      "200",
+      Colors.brown,
+      "lib/images/steak_burger.png"
+    ],
+    [
+      "Supreme burger",
+      "la parrilla",
+      "235",
+      Colors.blue,
+      "lib/images/supreme_burger.png"
+    ],
+    [
+      "Tiny burger",
+      "burger king",
+      "45",
+      Colors.red,
+      "lib/images/tiny_burger.png"
+    ],
+    [
+      "Basic burger",
+      "macdonals",
+      "90",
+      Colors.blue,
+      "lib/images/basic_burger.png"
+    ],
+    [
+      "Cheese burger",
+      "monica burgers",
+      "145",
+      Colors.red,
+      "lib/images/cheese_burger.png"
+    ],
   ];
-  BurgerTab({super.key});
+
+  BurgerTab({super.key, required this.cart}); // Constructor que acepta el parámetro cart
 
   @override
   Widget build(BuildContext context) {
-    //Widget para usar cuadrícula
     return GridView.builder(
-        //Cuántos elementos hay
-        itemCount: donutsOnSale.length,
-        padding: EdgeInsets.all(12),
-        //cómo se distrubuirán los elementos
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //Cuántas columnas
-          crossAxisCount: 2,
-          //Relación de aspecto(proporción)
-          childAspectRatio: 1 / 1.5,
-        ),
-        itemBuilder: (context, index) {
-          return DonutTile(
-            donutFlavor: donutsOnSale[index][0],
-            donutProvider:donutsOnSale[index][1],
-            donutPrice: donutsOnSale[index][2],
-            donutColor: donutsOnSale[index][3],
-            imageName: donutsOnSale[index][4],
-          );
-        });
+      itemCount: burgersOnSale.length,
+      padding: const EdgeInsets.all(12),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1 / 1.5,
+      ),
+      itemBuilder: (context, index) {
+        final burger = burgersOnSale[index];
+
+        return DonutTile(
+          donutFlavor: burger[0],
+          donutProvider: burger[1],
+          donutPrice: burger[2],
+          donutColor: burger[3],
+          imageName: burger[4],
+          onTap: () {
+            // Agregar el artículo al carrito
+            cart.addItem(
+              CartItem(
+                productName: burger[0],
+                productPrice: burger[2],
+                quantity: 1,
+                imageName: burger[4],
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Item added to cart")),
+            );
+          },
+        );
+      },
+    );
   }
 }

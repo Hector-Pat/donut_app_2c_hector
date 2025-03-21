@@ -1,94 +1,93 @@
 import 'package:donut_app_2c_hector/utils/donut_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:donut_app_2c_hector/cart/cart.dart';
+import 'package:donut_app_2c_hector/cart/cart_item.dart';
 
 class SmoothieTab extends StatelessWidget {
-  //Lista de donas
-  final List donutsOnSale = [
-    // [ donutFlavor, donutPrice, donutColor, imageName ]
-    [
-      "Ice Cream",
-      "Krispy Kreme",
-      "36",
-      Colors.blue,
-      "lib/images/icecream_donut.png"
-    ],
-    [
-      "Strawberry",
-      "Dunkin Donuts",
-      "45",
-      Colors.red,
-      "lib/images/strawberry_donut.png"
-    ],
-    [
-      "Grape Ape",
-      "El Globo",
-      "84",
-      Colors.purple,
-      "lib/images/grape_donut.png"
-    ],
-    [
-      "Choco",
-      "Starbucks",
-      "95",
-      Colors.brown,
-      "lib/images/chocolate_donut.png"
-    ],
-    //otras 4 donas mas
-    [
-      "Ice Cream",
-      "Krispy Kreme",
-      "36",
-      Colors.blue,
-      "lib/images/icecream_donut.png"
-    ],
-    [
-      "Strawberry",
-      "Dunkin Donuts",
-      "45",
-      Colors.red,
-      "lib/images/strawberry_donut.png"
-    ],
-    [
-      "Grape Ape",
-      "El Globo",
-      "84",
-      Colors.purple,
-      "lib/images/grape_donut.png"
-    ],
-    [
-      "Choco",
-      "Starbucks",
-      "95",
-      Colors.brown,
-      "lib/images/chocolate_donut.png"
-    ],
+  final Cart cart; // Agregar la instancia de Cart
 
-    
+  // Lista de smoothies
+  final List smoothiesOnSale = [
+    [
+      "Apple Smoothie",
+      "Japan Kawaii",
+      "50",
+      Colors.blue,
+      "lib/images/apple_smoothie.png"
+    ],
+    [
+      "Berry Smoothie",
+      "Core Desserts",
+      "60",
+      Colors.red,
+      "lib/images/berry_smoothie.png"
+    ],
+    [
+      "Carrot Smoothie",
+      "Starbucks",
+      "45",
+      Colors.purple,
+      "lib/images/carrot_smoothie.png"
+    ],
+    [
+      "Fresh Smoothie",
+      "Japan Kawaii",
+      "35",
+      Colors.brown,
+      "lib/images/fresh_smoothie.png"
+    ],
+    [
+      "Pear Smoothie",
+      "Core Desserts",
+      "50",
+      Colors.blue,
+      "lib/images/pear_smoothie.png"
+    ],
+    [
+      "Pink Smoothie",
+      "Starbucks",
+      "45",
+      Colors.red,
+      "lib/images/pink_smoothie.png"
+    ],
   ];
-  SmoothieTab({super.key});
+
+  SmoothieTab({super.key, required this.cart}); // Constructor que acepta el parámetro cart
 
   @override
   Widget build(BuildContext context) {
-    //Widget para usar cuadrícula
     return GridView.builder(
-        //Cuántos elementos hay
-        itemCount: donutsOnSale.length,
-        padding: EdgeInsets.all(12),
-        //cómo se distrubuirán los elementos
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //Cuántas columnas
-          crossAxisCount: 2,
-          //Relación de aspecto(proporción)
-          childAspectRatio: 1 / 1.5,
-        ),
-        itemBuilder: (context, index) {
-          return DonutTile(
-            donutFlavor: donutsOnSale[index][0],
-            donutProvider:donutsOnSale[index][1],
-            donutPrice: donutsOnSale[index][2],
-            donutColor: donutsOnSale[index][3],
-            imageName: donutsOnSale[index][4],
-          );
-        });
+      itemCount: smoothiesOnSale.length,
+      padding: const EdgeInsets.all(12),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1 / 1.5,
+      ),
+      itemBuilder: (context, index) {
+        final smoothie = smoothiesOnSale[index];
+
+        return DonutTile(
+          donutFlavor: smoothie[0],
+          donutProvider: smoothie[1],
+          donutPrice: smoothie[2],
+          donutColor: smoothie[3],
+          imageName: smoothie[4],
+          onTap: () {
+            // Agregar el artículo al carrito
+            cart.addItem(
+              CartItem(
+                productName: smoothie[0],
+                productPrice: smoothie[2],
+                quantity: 1,
+                imageName: smoothie[4],
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Item added to cart")),
+            );
+          },
+        );
+      },
+    );
   }
 }
