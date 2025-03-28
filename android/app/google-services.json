@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "572364594195",
+    "project_id": "donut-app-hector-2c",
+    "storage_bucket": "donut-app-hector-2c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572364594195:android:fab1d8d92bb68b96aa33e6",
+        "android_client_info": {
+          "package_name": "com.example.donut_app_2c_hector"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7YkQLYoTcLYlLglOnILbfqX5rUbFYybE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

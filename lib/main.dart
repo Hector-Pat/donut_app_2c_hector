@@ -1,7 +1,16 @@
 import 'package:donut_app_2c_hector/pages/home_page.dart';
 import 'package:flutter/material.dart';
+//estas librerías pertenecen a firebase después de haberlas implementado en CMD
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  //Asegura que Flutter esté completamente inicializado antes de Firebase.
+  WidgetsFlutterBinding.ensureInitialized();
+  //inicializa Firebase usando la configuración generada en firebase_options.dart
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
